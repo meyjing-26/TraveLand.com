@@ -2249,18 +2249,30 @@ function selectLanguage(e, langCode, flagUrl, labelText) {
 
         destinations.forEach(item => {
             const cardLink = document.createElement('a');
-            cardLink.href = `/destinations/${item.id}`;
-            cardLink.className = 'destination-card-link'; // Added dedicated class
+              // 1. Map each destination ID directly to its static .html file
+            const fileNames = {
+                1: 'siem-reap.html',
+                2: 'sihanouk.html',
+                3: 'kampot.html',
+                4: 'mondulkiri.html',
+                5: 'phnom-penh.html',
+                6: 'battambang.html',
+                7: 'kep.html',
+                8: 'preah-vihear.html'
+            };
+            cardLink.href = fileNames[item.id] || '#';
+        cardLink.className = 'destination-card-link';
 
-            const card = document.createElement('div');
-            card.className = 'recommendation-card grid-card'; // Added grid-card modifier class
-            card.innerHTML = `
-                <img src="${item.image}" alt="${item.province[currentLang]}" class="card-image" onerror="this.src='https://via.placeholder.com/300x180?text=Add+Image'">
-                <div class="card-body">
-                    <h3 class="destination-name-title" style="font-size: 1.25rem; font-weight: 700; line-height: 1.15; color: #111827; margin: 0 0 8px; min-height: 2.5rem;">📍 ${item.province[currentLang]}</h3>
-                    <p class="destination-description" style="font-size: 0.95rem; line-height: 1.5; color: #4b5563; margin: 0; font-weight: 400;">${item.description[currentLang]}</p>
-                </div>
-            `;
+        const card = document.createElement('div');
+        card.className = 'recommendation-card grid-card';
+        
+        // 2. Automatically strips out 'image/' path prefix so images load perfectly
+        const cleanImagePath = item.image.replace('image/', '');
+        
+ card.innerHTML = `
+            <img src="${cleanImagePath}" alt="${item.province[currentLang]}" class="card-image" onerror="this.src='default.jpg'">                <div class="card-body">
+                    <h3>📍 ${item.province[currentLang]}</h3>
+<p style="color: #71717a; font-size: 0.98rem; line-height: 1.5; margin-top: 6px;">${item.description[currentLang]}</p>            `;
             
             cardLink.appendChild(card);
             mainList.appendChild(cardLink);
