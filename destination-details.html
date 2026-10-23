@@ -1,0 +1,550 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Destination Details - TraveLand</title>
+    
+    <!-- Google Fonts & Font Awesome Icons -->
+    <link rel="preconnect" href="https://googleapis.com">
+    <link rel="preconnect" href="https://gstatic.com" crossorigin>
+    <link href="https://googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cloudflare.com">
+
+    <style>
+        :root {
+            --primary-yellow: #ffc107;
+            --primary-yellow-hover: #e0a800;
+            --text-dark: #1e293b;
+            --text-muted: #64748b;
+            --border-color: #e2e8f0;
+            --bg-light: #ffffff;
+            --teal: #008080;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Plus Jakarta Sans', system-ui, -apple-system, sans-serif;
+        }
+
+        body {
+            background-color: #f8fafc;
+            color: var(--text-dark);
+            width: 100vw;
+            overflow-x: hidden;
+            min-height: 100vh;
+        }
+
+        .hero-section {
+            position: relative;
+            width: 100vw;
+            height: 52vh;
+            min-height: 380px;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+        }
+
+        .hero-top {
+            max-width: 1200px;
+            width: 100%;
+            margin: 0 auto;
+            padding: 32px 5% 0;
+            display: flex;
+            justify-content: flex-start;
+            align-items: center;
+        }
+
+        .back-btn {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            color: #ffffff;
+            text-decoration: none;
+            font-weight: 600;
+            font-size: 0.95rem;
+            background: rgba(15, 23, 42, 0.6);
+            padding: 10px 20px;
+            border-radius: 30px;
+            backdrop-filter: blur(8px);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            transition: all 0.2s ease;
+            z-index: 10;
+        }
+
+        .back-btn:hover {
+            background: var(--primary-yellow);
+            color: #000000;
+            border-color: var(--primary-yellow);
+        }
+
+        .hero-bottom {
+            max-width: 1200px;
+            width: 100%;
+            margin: 0 auto;
+            padding: 0 5% 32px;
+        }
+
+        .hero-title-wrapper {
+            max-width: calc(66.66% - 24px);
+        }
+
+        .location-tag {
+            display: inline-block;
+            background: var(--primary-yellow);
+            color: #000000;
+            font-weight: 700;
+            font-size: 0.75rem;
+            padding: 4px 12px;
+            border-radius: 20px;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            margin-bottom: 10px;
+        }
+
+        .hero-title {
+            color: #ffffff;
+            font-size: 2.8rem;
+            font-weight: 800;
+            letter-spacing: -0.5px;
+            line-height: 1.15;
+            text-shadow: 0 2px 10px rgba(0, 0, 0, 0.3);
+        }
+
+        .content-container {
+            max-width: 1200px;
+            margin: 40px auto 60px;
+            padding: 0 5%;
+        }
+
+        .grid-layout {
+            display: grid;
+            grid-template-columns: 2fr 1fr;
+            gap: 48px;
+            align-items: start;
+        }
+
+        @media (max-width: 768px) {
+            .grid-layout { grid-template-columns: 1fr; }
+            .hero-title-wrapper { max-width: 100%; }
+        }
+
+        .section-heading {
+            font-size: 1.3rem;
+            font-weight: 700;
+            color: var(--text-dark);
+            margin-bottom: 16px;
+        }
+
+        .description-text {
+            font-size: 1.08rem;
+            line-height: 1.85;
+            color: #475569;
+            margin-bottom: 20px;
+        }
+
+        .spots-box {
+            background: #fffdf0;
+            border-left: 5px solid var(--primary-yellow);
+            padding: 20px 24px;
+            border-radius: 12px;
+            margin-top: 32px;
+            margin-bottom: 32px;
+        }
+
+        .spots-box h4 {
+            font-size: 1.05rem;
+            color: var(--text-dark);
+            margin-bottom: 6px;
+        }
+
+        .spots-box p {
+            color: var(--teal);
+            font-weight: 600;
+            font-size: 1.05rem;
+        }
+
+        .faq-item { border-bottom: 1px solid #e2e8f0; }
+
+        .faq-question {
+            width: 100%;
+            background: none;
+            border: none;
+            outline: none;
+            padding: 16px 0;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            font-size: 1rem;
+            font-weight: 600;
+            color: var(--text-dark);
+            cursor: pointer;
+        }
+
+        .faq-arrow {
+            width: 28px;
+            height: 28px;
+            background: #f1f5f9;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 0.7rem;
+            color: #64748b;
+            transition: transform 0.3s ease;
+        }
+
+        .faq-item.active .faq-arrow {
+            transform: rotate(180deg);
+            background: var(--primary-yellow);
+            color: #000000;
+        }
+
+        .faq-answer {
+            max-height: 0;
+            overflow: hidden;
+            transition: max-height 0.3s ease-out;
+        }
+
+        .faq-answer p {
+            font-size: 0.95rem;
+            line-height: 1.6;
+            color: #475569;
+            padding-bottom: 16px;
+        }
+
+        .sidebar-column { display: flex; flex-direction: column; gap: 24px; }
+
+        .sidebar-card {
+            background: #ffffff;
+            border-radius: 20px;
+            padding: 32px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.05);
+            border: 1px solid #e2e8f0;
+        }
+
+        .info-row { display: flex; align-items: center; gap: 16px; margin-bottom: 24px; }
+
+        .info-icon {
+            width: 44px;
+            height: 44px;
+            background: #f1f5f9;
+            border-radius: 10px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.2rem;
+            color: #64748b;
+        }
+
+        .info-text h5 {
+            font-size: 0.85rem;
+            color: var(--text-muted);
+            text-transform: uppercase;
+        }
+
+        .info-text p { font-size: 1rem; font-weight: 700; color: var(--text-dark); }
+
+        .plan-btn {
+            width: 100%;
+            background-color: var(--primary-yellow);
+            color: #000000;
+            border: none;
+            padding: 14px;
+            border-radius: 10px;
+            font-weight: 700;
+            font-size: 1rem;
+            cursor: pointer;
+            transition: background 0.2s ease;
+        }
+
+        .plan-btn:hover { background-color: var(--primary-yellow-hover); }
+
+        .slider-card {
+            background: #ffffff;
+            border-radius: 20px;
+            padding: 24px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.05);
+            border: 1px solid #e2e8f0;
+        }
+
+        .slider-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 16px; }
+
+        .slider-nav { display: flex; gap: 8px; }
+
+        .nav-btn {
+            width: 32px;
+            height: 32px;
+            border-radius: 50%;
+            border: 1px solid var(--text-dark);
+            background: white;
+            cursor: pointer;
+            font-weight: bold;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .slider-container {
+            position: relative;
+            width: 100%;
+            height: 220px;
+            border-radius: 14px;
+            overflow: hidden;
+        }
+
+        .slide-img {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            opacity: 0;
+            transition: opacity 0.5s ease-in-out;
+        }
+
+        .slide-img.active { opacity: 1; }
+    </style>
+</head>
+<body>
+
+<header id="hero-bg" class="hero-section" style="background: linear-gradient(to top, rgba(0, 0, 0, 0.45) 0%, rgba(0, 0, 0, 0.05) 50%, rgba(0, 0, 0, 0.1) 100%), url('') center/cover no-repeat;">    
+    <div class="hero-top">
+        <a href="index.html" class="back-btn">← Back to Home</a>
+    </div>
+    <div class="hero-bottom">
+        <div class="hero-title-wrapper">
+            <span class="location-tag">Cambodia Destination</span>
+            <h1 id="main-title" class="hero-title">📍 Loading Destination...</h1>
+        </div>
+    </div>
+</header>
+
+<main class="content-container">
+    <div class="grid-layout">
+        <div class="main-content">
+            <h3 class="section-heading">Overview & Experience</h3>
+            <div id="paragraphs-container"></div>
+
+            <div class="spots-box">
+                <h4>Must-Visit Highlights</h4>
+                <p id="highlights-text"></p>
+            </div>
+
+            <div class="faq-section">
+                <h3 class="section-heading" style="margin-bottom: 8px;">People also ask</h3>
+                <div id="faq-container"></div>
+            </div>
+        </div>
+
+        <div class="sidebar-column">
+            <div class="sidebar-card">
+                <h4>Trip Information</h4>
+                <hr style="border: 0; border-top: 1px solid var(--border-color); margin: 16px 0;">
+                
+                <div class="info-row">
+                    <div class="info-icon"><i class="fa-solid fa-sun" style="color: #e6b800;"></i></div>
+                    <div class="info-text">
+                        <h5>Best Time to Visit</h5>
+                        <p id="best-time-text">-</p>
+                    </div>
+                </div>
+
+                <div class="info-row">
+                    <div class="info-icon"><i class="fa-solid fa-compass"></i></div>
+                    <div class="info-text">
+                        <h5>Travel Vibe</h5>
+                        <p id="vibe-text">-</p>
+                    </div>
+                </div>
+
+                <button class="plan-btn" onclick="alert('Booking feature coming soon!')">Plan a Trip Here</button>
+            </div>
+
+            <div class="slider-card">
+                <div class="slider-header">
+                    <h3 style="font-size: 1.1rem; font-weight: 700;">Explore Gallery</h3>
+                    <div class="slider-nav">
+                        <button class="nav-btn" onclick="moveSlide(-1)">‹</button>
+                        <button class="nav-btn" onclick="moveSlide(1)">›</button>
+                    </div>
+                </div>
+                <div id="image-slider" class="slider-container"></div>
+            </div>
+        </div>
+    </div>
+</main>
+<script>
+    // Pure data compiled directly from your complete DestinationController matrix
+    const destinationData = {
+        1: {
+            province: 'Siem Reap Province',
+            image: 'SiemReap.jpeg',
+            images: ['tonlehsarb.jpeg', 'PubStreet.jpg', 'AngkorWat.jpeg', 'KulenMountain.jpg', 'kompongthlock.jpeg', 'KompungTlouk.jpeg'],
+            spots: 'Angkor Wat, Phnom Kulen, Tonle Sap Lake',
+            best_time: 'November – February',
+            vibe: 'Historical, Cultural & Sacred',
+            paragraphs: [
+                "Step into a world of living history where ancient stone spires rise above lush jungle canopies. Siem Reap is the ultimate gateway to the legendary Khmer Empire, offering breathtaking sunrise views over Angkor Wat and moss-draped temple ruins wrapped in giant tree roots.",
+                "Beyond the ancient sanctuaries, immerse yourself in refreshing mountain waterfalls at Phnom Kulen National Park and discover vibrant floating villages along Tonle Sap Lake. The surrounding countryside reveals authentic rural culture and natural beauty at every turn.",
+                "As evening falls, the town comes alive with colorful artisanal night markets, world-class Khmer dining, and a vibrant local social scene. Siem Reap promises an inspiring, unforgettable journey that will stay in your heart forever."
+            ]
+        },
+        2: {
+            province: 'Preah Sihanouk & Koh Rong Islands',
+            image: 'KohRong.jpeg',
+            images: ['Preahsihanouk1.jpeg', 'Preahsihanouk2.jpeg', 'Preahsihanouk3.jpeg', 'Preahsihanouk4.jpeg', 'Preahsihanouk5.jpeg'],
+            spots: 'Koh Rong Sanloem, Saracen Bay, Ream National Park',
+            best_time: 'November – April',
+            vibe: 'Tropical & Relaxing',
+            paragraphs: [
+                "Escape to a tropical dreamland defined by miles of powder-white sands, turquoise ocean waters, and gently swaying palm trees. The southern islands offer a peaceful coastal retreat designed for ultimate relaxation and seaside bliss.",
+                "Spend your days snorkeling among vibrant coral reefs, kayaking through calm mangrove inlets, or lounging on secluded beaches. When night falls, swim in quiet, dark bays to witness the magical glow of bioluminescent plankton.",
+                "Indulge in fresh seafood at water's-edge restaurants and take in stunning sunset views over the Gulf of Thailand. Whether you seek quiet beachfront luxury or lively island energy, this coastal paradise is calling your name."
+            ]
+        },
+        3: {
+            province: 'Kampot & Kep Provinces',
+            image: 'KomPot.jpeg',
+            images: ['Kompot1.jpeg', 'Kompot2.jpeg', 'Dongtae.jpeg', 'Kep1.jpeg', 'Kep2.jpeg', 'Kep3.jpeg', 'Kep4.jpeg', 'Kep5.jpeg'],
+            spots: 'Bokor Mountain, Kampot River, Kep Crab Market',
+            best_time: 'October – March',
+            vibe: 'Scenic, Quiet & Culinary',
+            paragraphs: [
+                "Discover a charming riverside haven where French colonial architecture meets dramatic mountain backdrops and serene river views. Kampot and Kep provide the perfect laid-back environment to slow down and savor life.",
+                "Journey up the misty roads of Bokor National Park for sweeping ocean views, tour world-famous organic Kampot Pepper farms, and feast on ocean-fresh crab stir-fried with green peppercorns at the iconic Kep Crab Market.",
+                "End your afternoons with a peaceful river cruise as the sun sets over the water and fireflies illuminate the riverbanks. It's an unforgettable destination for nature lovers, food enthusiasts, and peace-seekers alike."
+            ]
+        },
+        4: {
+            province: 'Mondulkiri & Ratanakiri Provinces',
+            image: 'mondulkiri-elephant.jpg',
+            images: ['Mondulkiri1.jpeg', 'Mondulkiri2.jpeg', 'Mondulkiri3.jpeg', 'Mondulkiri4.jpeg', 'Mondulkiri5.jpeg', 'Bousra-Mundulkiri.jpg'],
+            spots: 'Elephant Valley Project, Bousra Waterfall, Yeak Laom Lake',
+            best_time: 'October – February',
+            vibe: 'Eco-Adventure & Nature',
+            paragraphs: [
+                "Journey into Cambodia's wild eastern highlands, where rolling green hills, pine forests, and cool mountain breezes offer a refreshing change of scenery. This untouched wilderness is an ideal sanctuary for eco-adventurers.",
+                "Walk alongside rescued Asian elephants in protected forest sanctuaries, hike to majestic cascading waterfalls like Bousra, and swim in the emerald volcanic waters of Yeak Laom Crater Lake.",
+                "Connect with local indigenous hill communities and learn about their deep-rooted cultural traditions. The eastern highlands deliver a pure, inspiring escape straight into the heart of pristine nature."
+            ]
+        },
+        5: {
+            province: 'Phnom Penh (Capital Region)',
+            image: 'PhnomPenh.jpeg',
+            images: ['PhnomPenh1.jpeg', 'PhnomPenh2.jpeg', 'PhnomPenh3.jpeg', 'PhnomPenh4.jpeg', 'PhnomPenh5.jpeg'],
+            spots: 'Royal Palace, National Museum, Mekong River Promenade',
+            best_time: 'November – February',
+            vibe: 'Vibrant & Royal',
+            paragraphs: [
+                "Feel the dynamic pulse of Cambodia's capital city, where classic royal majesty meets modern urban sophistication. Situated along the scenic confluence of three major rivers, Phnom Penh is vibrant, colorful, and rich in history.",
+                "Explore the golden spires of the Royal Palace, view ancient Angkorian artifacts at the National Museum, and experience the warm, resilient spirit of the local culture through historic monuments and galleries.",
+                "As night approaches, stroll along the lively riverfront promenade, take a sunset Mekong cruise, and enjoy rooftop cocktails overlooking the illuminated skyline. Phnom Penh offers a rich urban adventure you won't want to miss."
+            ]
+        },
+        6: {
+            province: 'Battambang Province',
+            image: 'Battambang.jpeg',
+            images: ['Btt1.jpeg', 'Btt2.jpeg', 'Btt3.jpeg', 'Btt4.jpeg', 'Btt5.jpeg', 'lakeYeakLaom.jpg'],
+            spots: 'Bamboo Train, Phnom Sampeau & Bat Caves, Wat Banan',
+            best_time: 'November – March',
+            vibe: 'Artistic & Heritage',
+            paragraphs: [
+                "Immerse yourself in Cambodia’s artistic heartland, where historic colonial shopfronts meet lush green farmland. Battambang is celebrated for its thriving arts community, unique local crafts, and tranquil country charm.",
+                "Ride the famous Bamboo Train across open rice paddies, explore ancient hilltop temples, and witness millions of bats stream out of mountain caves at Phnom Sampeau during sunset.",
+                "Wander through local art galleries, enjoy farm-to-table cuisine, and meet warm locals who are eager to share their heritage. Battambang provides an authentic and deeply rewarding look into Cambodian culture."
+            ]
+        },
+        7: {
+            province: 'Preah Vihear Province',
+            image: 'PreahVihear.png',
+            images: ['Preahvihear2.webp', 'Preahvihear3.webp', 'Preahvihear4.webp', 'Preahvihear5.webp'],
+            spots: 'Preah Vihear Clifftop Temple, Koh Ker Pyramid, Kulen Promtep Sanctuary',
+            best_time: 'November – February',
+            vibe: 'Ancient & Majestic',
+            paragraphs: [
+                "Ascend to dramatic heights at one of Southeast Asia's most majestic architectural masterpieces. Preah Vihear Province features ancient sanctuaries perched high atop mountain cliffs overlooking endless green plains.",
+                "Explore the UNESCO World Heritage cliffside Preah Vihear Temple, and travel deep into surrounding forests to discover Koh Ker, a unique seven-tiered pyramid temple surrounded by quiet nature.",
+                "Tailored for intrepid explorers seeking grand history without the crowds, this destination delivers unforgettable mountain views and ancient wonders. Step off the beaten path and claim a truly remarkable experience."
+            ]
+        },
+        8: {
+            province: 'Koh Kong Province',
+            image: 'KohKong1.jpg',
+            images: ['Kohkong2.jpeg', 'Kohkong3.jpeg', 'Kohkong4.jpeg'],
+            spots: 'Peam Krasaop Mangroves, Cardamom Mountains, Tatai Waterfall',
+            best_time: 'November – April',
+            vibe: 'Wild & Eco-Exploration',
+            paragraphs: [
+                "Uncover one of the largest intact rainforest ecosystems in Asia. Koh Kong is an eco-tourist's dream, featuring dense jungle trails, cascading rivers, and vast coastal mangrove reserves along the Cardamom Mountains.",
+                "Kayak down tranquil rivers, walk high elevated boardwalks through protected mangroves, and hike to hidden jungle waterfalls tucked away in the rainforest.",
+                "Stay in floating eco-lodges surrounded by peaceful nature sounds and enjoy guided wildlife tracking expeditions. Koh Kong is the ultimate sanctuary for true lovers of nature and outdoor adventure."
+            ]
+        }
+    };
+
+  // Extract dynamic url ID parameter (destination-details.html?id=1)
+    const urlParams = new URLSearchParams(window.location.search);
+    const id = urlParams.get('id') || 1;
+    const dest = destinationData[id];
+
+    if (dest) {
+        document.title = `${dest.province} - TraveLand`;
+        document.getElementById('main-title').innerText = `📍 ${dest.province}`;
+        document.getElementById('highlights-text').innerText = `✨ ${dest.spots}`;
+        document.getElementById('best-time-text').innerText = dest.best_time;
+        document.getElementById('vibe-text').innerText = dest.vibe;
+        document.getElementById('hero-bg').style.backgroundImage = `linear-gradient(to top, rgba(0,0,0,0.45), rgba(0,0,0,0.05)), url('${dest.image}')`;
+
+        // Load Paragraph text blocks
+        const pContainer = document.getElementById('paragraphs-container');
+        dest.paragraphs.forEach(text => {
+            const p = document.createElement('p');
+            p.className = 'description-text';
+            p.innerText = text;
+            pContainer.appendChild(p);
+        });
+
+        // Setup drop-down FAQ Accordions
+        const faqContainer = document.getElementById('faq-container');
+        const faqs = [
+            { q: `Is it safe to go to ${dest.province} now?`, a: `Yes, ${dest.province} is generally very safe for travelers. It is an incredible destination with a welcoming atmosphere, friendly locals, and active security measures.` },
+            { q: `What to be careful of in ${dest.province}?`, a: `Be mindful of heat exhaustion by staying hydrated. Avoid bringing heavy unsecured valuables to crowded street markets, respect local cultural sites, and check transport pricing beforehand.` }
+        ];
+        faqs.forEach(faq => {
+            faqContainer.innerHTML += `
+                <div class="faq-item">
+                    <button class="faq-question" onclick="toggleFaq(this)">
+                        <span>${faq.q}</span>
+                        <span class="faq-arrow">▼</span>
+                    </button>
+                    <div class="faq-answer"><p>${faq.a}</p></div>
+                </div>`;
+        });
+
+        // Build image slider entries
+        const slider = document.getElementById('image-slider');
+        dest.images.forEach((img, index) => {
+            slider.innerHTML += `<img src="${img}" class="slide-img ${index === 0 ? 'active' : ''}" alt="Gallery ${index}">`;
+        });
+    }
+
+    function toggleFaq(button) {
+        const item = button.parentElement;
+        const answer = button.nextElementSibling;
+        item.classList.toggle('active');
+        answer.style.maxHeight = item.classList.contains('active') ? answer.scrollHeight + "px" : "0";
+    }
+
+    let currentSlide = 0;
+    function moveSlide(dir) {
+        const slides = document.querySelectorAll('.slide-img');
+        if(!slides.length) return;
+        slides[currentSlide].classList.remove('active');
+        currentSlide = (currentSlide + dir + slides.length) % slides.length;
+        slides[currentSlide].classList.add('active');
+    }
+</script>
+</body>
+</html>
