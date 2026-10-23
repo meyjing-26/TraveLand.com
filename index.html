@@ -232,7 +232,7 @@
 
         .hero-banner p {
             color: #e2e8f0;
-            font-size: 1.1rem;
+            font-size: 1.25rem;
             max-width: 580px;
             line-height: 1.6;
             margin-bottom: 32px;
@@ -314,8 +314,8 @@
 
         .about-content p {
             color: #64748b;
-            font-size: 0.98rem;
-            line-height: 1.7;
+            font-size: 1.25rem;
+            line-height: 1.8;
             margin-bottom: 28px;
         }
 
@@ -441,7 +441,7 @@
        #destinations p {
             color: #718096;
             max-width: 900px;
-            font-size: 1.1rem;
+            font-size: 1.25rem;
             line-height: 1.6;
             margin: 0 auto 40px; /* centers the block horizontally while keeping bottom margin */
             padding: 0 20px;
@@ -476,10 +476,11 @@
         }
 
         .recommendation-card h3 {
-            font-size: 1.15rem;
-            font-weight: 800;
+            font-size: 1.25rem !important;
+            font-weight: 800 !important;
             color: var(--text-dark);
-            margin-bottom: 8px;
+            margin: 0 0 0px !important;
+            line-height: 1.2;
         }
 
         .recommendation-card .spots-text {
@@ -757,7 +758,7 @@
 
 /* Force titles to take up 2 lines of vertical height so all paragraphs line up */
 .card-body h3 {
-    font-size: 1.15rem;
+    font-size: 1.25rem;
     font-weight: 700;
     color: var(--text-dark);
     display: flex;
@@ -825,7 +826,7 @@
     color: #718096;
     max-width: 700px;
     margin: 0 auto;
-    font-size: 1.1rem;
+    font-size: 1.25rem;
     line-height: 1.6;
 }
 
@@ -936,7 +937,7 @@
     color: #718096;
     max-width: 700px;
     margin: 0 auto;
-    font-size: 1.1rem;
+    font-size: 1.25rem;
     line-height: 1.6;
     margin-bottom: 10px;
 
@@ -1913,7 +1914,7 @@ html {
             <h2 id="welcome-title" style="font-size: 1.65rem; margin-bottom: 12px; color: var(--text-dark, #1e293b); font-weight: 700;">
                 Welcome to TraveLand!<br>Shall we help you find your next destination?
             </h2>
-            <p id="welcome-desc" style="color: var(--text-muted, #64748b); font-size: 0.95rem; margin-bottom: 28px; line-height: 1.5;">
+            <p id="welcome-desc" style="color: var(--text-muted, #64748b); font-size: 1.25rem; margin-bottom: 28px; line-height: 1.5;">
                 Answer a few quick questions and we'll match you with the perfect spots in Cambodia!
             </p>
 
@@ -2256,8 +2257,10 @@ function selectLanguage(e, langCode, flagUrl, labelText) {
             card.innerHTML = `
                 <img src="${item.image}" alt="${item.province[currentLang]}" class="card-image" onerror="this.src='https://via.placeholder.com/300x180?text=Add+Image'">
                 <div class="card-body">
-                    <h3>📍 ${item.province[currentLang]}</h3>
-<p style="color: #71717a; font-size: 0.98rem; line-height: 1.5; margin-top: 6px;">${item.description[currentLang]}</p>            `;
+                    <h3 class="destination-name-title" style="font-size: 1.25rem; font-weight: 700; line-height: 1.15; color: #111827; margin: 0 0 8px; min-height: 2.5rem;">📍 ${item.province[currentLang]}</h3>
+                    <p class="destination-description" style="font-size: 0.95rem; line-height: 1.5; color: #4b5563; margin: 0; font-weight: 400;">${item.description[currentLang]}</p>
+                </div>
+            `;
             
             cardLink.appendChild(card);
             mainList.appendChild(cardLink);
@@ -2319,9 +2322,9 @@ function selectLanguage(e, langCode, flagUrl, labelText) {
                 const card = document.createElement('div');
                 card.className = 'recommendation-card';
                 card.innerHTML = `
-                    <h3>📍 ${item.province[currentLang]}</h3>
-                    <p class="spots-text"><strong>${t.top_spots}</strong> ${item.spots[currentLang]}</p>
-                    <p class="desc-text">${item.description[currentLang]}</p>
+                    <h3 class="destination-name-title" style="font-size: 1.25rem; font-weight: 700; line-height: 1.15; color: #111827; margin: 0 0 8px; min-height: 2.5rem;">📍 ${item.province[currentLang]}</h3>
+                    <p class="spots-text" style="font-size: 1.05rem; line-height: 1.45; font-weight: 600; color: #111827; margin-bottom: 2px;"><strong>${t.top_spots}</strong> ${item.spots[currentLang]}</p>
+                    <p class="desc-text" style="font-size: 0.95rem; line-height: 1.5; color: #4b5563; margin: 0; font-weight: 400;">${item.description[currentLang]}</p>
                 `;
                 listContainer.appendChild(card);
             });
