@@ -2242,6 +2242,36 @@ function selectLanguage(e, langCode, flagUrl, labelText) {
     }
     
 
+function renderAllDestinations() {
+    const mainList = document.getElementById('main-destinations-list');
+    if (!mainList) return;
+    mainList.innerHTML = '';
+
+    destinations.forEach(item => {
+        const cardLink = document.createElement('a');
+        
+        // Change the link to point to the shared template file with the correct ID parameter
+        cardLink.href = `destination-details.html?id=${item.id}`;
+        cardLink.className = 'destination-card-link';
+
+        const card = document.createElement('div');
+        card.className = 'recommendation-card grid-card';
+        
+        // Strips out the 'image/' path prefix so the home page grid images load perfectly
+        const cleanImagePath = item.image.replace('image/', '');
+        
+        card.innerHTML = `
+            <img src="${cleanImagePath}" alt="${item.province[currentLang]}" class="card-image" onerror="this.src='default.jpg'">
+            <div class="card-body">
+                <h3>📍 ${item.province[currentLang]}</h3>
+                <p style="color: #71717a; font-size: 0.98rem; line-height: 1.5; margin-top: 6px;">${item.description[currentLang]}</p>
+            </div>
+        `;
+        
+        cardLink.appendChild(card);
+        mainList.appendChild(cardLink);
+    });
+}
     function renderAllDestinations() {
         const mainList = document.getElementById('main-destinations-list');
         if (!mainList) return;
