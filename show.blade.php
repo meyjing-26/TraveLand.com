@@ -600,10 +600,11 @@
                         @endforeach
                     @else
                         <!-- Direct default local images fallback if array is empty -->
-                        <img src="{{ asset('image/Siemreap.tour.jpg') }}" alt="Photo 1" class="slide-img active">
-                        <img src="{{ asset('image/Angkorwat.blog.jpg') }}" alt="Photo 2" class="slide-img">
-                        <img src="{{ asset('image/sacredphnomkulen.blog.jpg') }}" alt="Photo 3" class="slide-img">
+                        <img src="{{ asset('Siemreap.tour.jpg') }}" alt="Photo 1" class="slide-img active">
+                        <img src="{{ asset('Angkorwat.blog.jpg') }}" alt="Photo 2" class="slide-img">
+                        <img src="{{ asset('sacredphnomkulen.blog.jpg') }}" alt="Photo 3" class="slide-img">
                     @endif
+
                 </div>
             </div>
         </div> <!-- Closes sidebar column -->
